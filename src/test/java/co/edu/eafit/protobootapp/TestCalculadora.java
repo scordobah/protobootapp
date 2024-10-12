@@ -10,7 +10,7 @@ public class TestCalculadora {
     @Test
     public void testCuadradoPositivo() {
         Calculadora calc = new Calculadora();
-        assertEquals(36.0, calc.cuadrado(6.0), 0);
+        assertEquals(37.0, calc.cuadrado(6.0), 0);
     }
 
     @Test
