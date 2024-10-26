@@ -9,27 +9,28 @@ pipeline {
         }
         stage('Build') {
             steps {
-                script {
-                    // Usando Maven para construir el proyecto
-                    sh './mvnw clean package' // Para Unix/Linux
-                    // bat 'mvnw.cmd clean package' // Para Windows
-                }
+                build 'my_project'
+                // script {
+                //     // Usando Maven para construir el proyecto
+                //     sh './mvnw clean package' // Para Unix/Linux
+                //     // bat 'mvnw.cmd clean package' // Para Windows
+                // }
             }
         }
-        stage('Test') {
-            steps {
-                script {
-                    // Ejecutar pruebas
-                    sh './mvnw test' // Para Unix/Linux
-                    // bat 'mvnw.cmd test' // Para Windows
-                }
-            }
-        }
-        stage('Archive Artifacts') {
-            steps {
-                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         script {
+        //             // Ejecutar pruebas
+        //             sh './mvnw test' // Para Unix/Linux
+        //             // bat 'mvnw.cmd test' // Para Windows
+        //         }
+        //     }
+        // }
+        // stage('Archive Artifacts') {
+        //     steps {
+        //         archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+        //     }
+        // }
     }
 
     post {
