@@ -18,7 +18,7 @@ pipeline {
 
     post {
         always {
-            jacoco
+            jacoco()
             junit stdioRetention: '', testResults: 'target/surefire-reports/*.xml'
             recordIssues sourceCodeRetention: 'LAST_BUILD', tools: [mavenConsole()]
             recordIssues sourceCodeRetention: 'LAST_BUILD', tools: [checkStyle()]
