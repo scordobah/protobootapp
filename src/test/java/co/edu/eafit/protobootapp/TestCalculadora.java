@@ -28,7 +28,7 @@ public class TestCalculadora {
     @Test
     public void testCuadradoNegativo() {
         Calculadora calc = new Calculadora();
-        assertEquals(-16.0, calc.cuadrado(-4.0), 0);
+        assertEquals(16.0, calc.cuadrado(-4.0), 0);
     }
     
     //Pruebas unitarias para el cubo
