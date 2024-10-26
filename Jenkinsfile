@@ -7,16 +7,21 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Build') {
+        stage('coverage') {
             steps {
-                build 'my_project'
-                // script {
-                //     // Usando Maven para construir el proyecto
-                //     sh './mvnw clean package' // Para Unix/Linux
-                //     // bat 'mvnw.cmd clean package' // Para Windows
-                // }
+                jacoco()
             }
         }
+        // stage('Build') {
+        //     steps {
+        //         build 'my_project'
+        //         // script {
+        //         //     // Usando Maven para construir el proyecto
+        //         //     sh './mvnw clean package' // Para Unix/Linux
+        //         //     // bat 'mvnw.cmd clean package' // Para Windows
+        //         // }
+        //     }
+        // }
         // stage('Test') {
         //     steps {
         //         script {
