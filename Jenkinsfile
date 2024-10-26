@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'my_maven' // The name you configured in Global Tool Configuration
+    }
+
     stages {
         stage('Checkout') {
             steps {
