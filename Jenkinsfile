@@ -6,42 +6,34 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         checkout scm
+        //     }
+        // }
         stage('Build') {
             steps {
                 script {
                     // Usando Maven para construir el proyecto
-                    //sh './mvnw clean package' // Para Unix/Linux
-                    bat 'mvn compile test install package' // Para Windows
+                    bat 'mvn compile test install package'
                 }
             }
         }
-        stage('coverage') {
+    }
+
+    post {
+        stage('Code Coverage') {
             steps {
                 jacoco()
             }
         }
-        // stage('Test') {
-        //     steps {
-        //         script {
-        //             // Ejecutar pruebas
-        //             sh './mvnw test' // Para Unix/Linux
-        //             // bat 'mvnw.cmd test' // Para Windows
-        //         }
-        //     }
-        // }
-        // stage('Archive Artifacts') {
-        //     steps {
-        //         archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-        //     }
-        // }
-    }
-
-    post {
+        stage('JUnit Report') {
+            junit stdioRetention: '', testResults: 'target/surefire-reports/*.xml'
+        }
+        stage('Record compiler') {
+            recordIssues sourceCodeRetention: 'LAST_BUILD', tools: [mavenConsole()]
+            recordIssues sourceCodeRetention: 'LAST_BUILD', tools: [checkStyle()]
+        }
         success {
             echo 'Build and Tests completed successfully!'
         }
