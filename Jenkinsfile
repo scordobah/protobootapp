@@ -1,10 +1,43 @@
 pipeline {
-    agent { docker { image 'maven:3.9.9-eclipse-temurin-21-alpine' } }
+    agent any
+
     stages {
-        stage('build') {
+        stage('Checkout') {
             steps {
-                sh 'mvn --version'
+                checkout scm
             }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    // Usando Maven para construir el proyecto
+                    sh './mvnw clean package' // Para Unix/Linux
+                    // bat 'mvnw.cmd clean package' // Para Windows
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    // Ejecutar pruebas
+                    sh './mvnw test' // Para Unix/Linux
+                    // bat 'mvnw.cmd test' // Para Windows
+                }
+            }
+        }
+        stage('Archive Artifacts') {
+            steps {
+                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build and Tests completed successfully!'
+        }
+        failure {
+            echo 'Build or Tests failed.'
         }
     }
 }
