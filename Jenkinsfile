@@ -12,7 +12,7 @@ pipeline {
                 script {
                     // Usando Maven para construir el proyecto
                     //sh './mvnw clean package' // Para Unix/Linux
-                    bat 'mvnw.cmd clean package' // Para Windows
+                    bat 'mvn compile test install package' // Para Windows
                 }
             }
         }
