@@ -22,15 +22,8 @@ pipeline {
     }
 
     post {
-        stage('Code Coverage') {
-            steps {
-                jacoco()
-            }
-        }
-        stage('JUnit Report') {
+        always {
             junit stdioRetention: '', testResults: 'target/surefire-reports/*.xml'
-        }
-        stage('Record compiler') {
             recordIssues sourceCodeRetention: 'LAST_BUILD', tools: [mavenConsole()]
             recordIssues sourceCodeRetention: 'LAST_BUILD', tools: [checkStyle()]
         }
