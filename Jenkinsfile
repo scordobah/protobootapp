@@ -6,12 +6,7 @@ pipeline {
     }
 
     stages {
-        // stage('Checkout') {
-        //     steps {
-        //         checkout scm
-        //     }
-        // }
-        stage('Build') {
+        stage('Code Build') {
             steps {
                 script {
                     // Usando Maven para construir el proyecto
@@ -23,9 +18,12 @@ pipeline {
 
     post {
         always {
+            jacoco
             junit stdioRetention: '', testResults: 'target/surefire-reports/*.xml'
             recordIssues sourceCodeRetention: 'LAST_BUILD', tools: [mavenConsole()]
             recordIssues sourceCodeRetention: 'LAST_BUILD', tools: [checkStyle()]
+            recordIssues sourceCodeRetention: 'LAST_BUILD', tools: [pmdParser()]
+            recordIssues sourceCodeRetention: 'LAST_BUILD', tools: [spotBugs(useRankAsPriority: true)]
         }
         success {
             echo 'Build and Tests completed successfully!'
